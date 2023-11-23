@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BasicCharacterController : MonoBehaviour
 {
+    public GameObject myParticle;
     //movement variables
     public float moveForce;
     public float maxSpeed;
@@ -35,6 +36,17 @@ public class BasicCharacterController : MonoBehaviour
             playerRigidbody.AddForce( (Input.GetAxis("Horizontal") * moveForce), 0, (Input.GetAxis("Vertical") * moveForce)); //applies force in the forward (vertical, z) and sideways (horizontal, y) axes
         }
         //move code ends
+
+        if (Mathf.Abs(playerRigidbody.velocity.magnitude) > 0)
+        {
+            
+            Debug.Log("starting particle");
+            myParticle.SetActive(true);
+        } else if (Mathf.Abs(playerRigidbody.velocity.magnitude) == 0)
+        {
+            Debug.Log("stopping particle");
+            myParticle.SetActive(false);
+        }
         
         //jump code starts
         if (Input.GetButtonDown("Jump") && groundcheck.GetComponent<Exercise2GroundCheck>().amIOnTheGround == true)
